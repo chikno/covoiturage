@@ -105,7 +105,8 @@ class Utilisateur
      */
     private $isInternational;
 
-
+       
+    
     /**
      * Get id
      *
@@ -391,4 +392,50 @@ class Utilisateur
     {
         return $this->isInternational;
     }
-}
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->trajet_utilisateur = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add trajet_utilisateur
+     *
+     * @param \MyApp\CovoiturageBundle\Entity\TrajetUtilisateur $trajetUtilisateur
+     * @return Utilisateur
+     */
+    public function addTrajetUtilisateur(\MyApp\CovoiturageBundle\Entity\TrajetUtilisateur $trajetUtilisateur)
+    {
+        $this->trajet_utilisateur[] = $trajetUtilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Remove trajet_utilisateur
+     *
+     * @param \MyApp\CovoiturageBundle\Entity\TrajetUtilisateur $trajetUtilisateur
+     */
+    public function removeTrajetUtilisateur(\MyApp\CovoiturageBundle\Entity\TrajetUtilisateur $trajetUtilisateur)
+    {
+        $this->trajet_utilisateur->removeElement($trajetUtilisateur);
+    }
+
+    /**
+     * Get trajet_utilisateur
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getTrajetUtilisateur()
+    {
+        return $this->trajet_utilisateur;
+    }
+    
+    public function __toString()
+    {
+        return $this->nom;
+    }
+    
+    }
