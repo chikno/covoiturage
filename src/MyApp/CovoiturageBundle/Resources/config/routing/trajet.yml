@@ -1,0 +1,30 @@
+trajet:
+    pattern:  /
+    defaults: { _controller: "MyAppCovoiturageBundle:Trajet:index" }
+
+trajet_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "MyAppCovoiturageBundle:Trajet:show" }
+
+trajet_new:
+    pattern:  /new
+    defaults: { _controller: "MyAppCovoiturageBundle:Trajet:new" }
+
+trajet_create:
+    pattern:  /create
+    defaults: { _controller: "MyAppCovoiturageBundle:Trajet:create" }
+    requirements: { _method: post }
+
+trajet_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "MyAppCovoiturageBundle:Trajet:edit" }
+
+trajet_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "MyAppCovoiturageBundle:Trajet:update" }
+    requirements: { _method: post|put }
+
+trajet_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "MyAppCovoiturageBundle:Trajet:delete" }
+    requirements: { _method: post|delete }

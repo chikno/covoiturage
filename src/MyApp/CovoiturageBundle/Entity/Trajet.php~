@@ -1,0 +1,91 @@
+<?php
+
+namespace MyApp\CovoiturageBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use MyApp\CovoiturageBundle\Entity\Utilisateur ;
+/**
+ * Trajet
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="MyApp\CovoiturageBundle\Entity\TrajetRepository")
+ */
+class Trajet
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="villeDepart", type="integer")
+     */
+    private $villeDepart;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="villeArrive", type="integer")
+     */
+    private $villeArrive;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateDepart", type="date")
+     */
+    private $dateDepart;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="dateArrive", type="date")
+     */
+    private $dateArrive;
+
+    /**
+     * @var \Boolean
+     *
+     * @ORM\Column(name="autoroute", type="boolean")
+     */
+    
+    private $autoroute;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bagage", type="string", length=1)
+     *
+     */
+
+    private $bagage;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="participation", type="integer")
+     */
+    private $participation;
+
+     
+  /**
+    * @ORM\ManyToMany(targetEntity="Utilisateur", cascade={"persist"})
+    */
+    
+    private $utilisateurs;
+      
+    
+    public function __construct() {
+        $this->utilisateurs = new ArrayCollection();
+             
+    }
+
+
+  }

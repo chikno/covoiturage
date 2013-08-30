@@ -1,0 +1,35 @@
+
+<html>
+    <head>
+        <title>{% block title %}Covoiturage{% endblock %}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+       {% block stylesheet %}  
+        <link rel="stylesheet" href="{{ asset('bundles/myappcovoiturage/css/main.css') }}" type="text/css" media="all" /> 
+               {% endblock %}
+{% block javascripts %}
+
+        <script src='http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js' type="text/javascript"></script>
+{% endblock %}
+
+    </head>
+    <body>
+        <div id="page">
+            <div id="header">
+                <img src="{{ asset('bundles/myappcovoiturage/images/logo.jpg') }}" alt="covoiturage" width="128" height="128" />
+                <ul id="menu">
+                    <li><a href="{{ path('trajet') }}">Covoiturage</a></li>
+                    <li><a href="{{ path('utilisateur') }}">Evenements</a></li>
+                    <li><a href="{{ path('trajet') }}">Blog</a></li>
+                </ul>
+            </div>
+            <div id="content">
+                <h1>{{ block('title') }}</h1>
+{% block content %}
+{% endblock %}
+            </div>
+            <div id="footer">
+                <p>Tous droits réservés © 2013</p>
+            </div>
+        </div>
+    </body>
+</html>

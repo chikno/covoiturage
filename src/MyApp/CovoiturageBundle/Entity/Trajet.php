@@ -3,14 +3,17 @@
 namespace MyApp\CovoiturageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\ArrayCollection;
+use MyApp\CovoiturageBundle\Entity\Utilisateur ;
+
 /**
- * Trajets
+ * Trajet
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="MyApp\CovoiturageBundle\Entity\TrajetsRepository")
+ * @ORM\Entity(repositoryClass="MyApp\CovoiturageBundle\Entity\TrajetRepository")
  */
-class Trajets
+class Trajet
+
 {
     /**
      * @var integer
@@ -49,41 +52,43 @@ class Trajets
      */
     private $dateArrive;
 
-    
-     /**
+    /**
      * @var \Boolean
      *
      * @ORM\Column(name="autoroute", type="boolean")
      */
-    private $autoroute;
     
-     /**
+    private $autoroute;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="bagage", type="string", length=1)
      *
      */
+
     private $bagage;
-    
+
     /**
      * @var integer
      *
      * @ORM\Column(name="participation", type="integer")
      */
     private $participation;
+
+     
+  /**
+    * @ORM\ManyToMany(targetEntity="Utilisateur", cascade={"persist"})
+    */
     
-    /**
-     *
-     * @OneToMany(targetEntity="Utilisateur", mappedBy="trajet", cascade={"persist", "remove", "merge"})
-     */
-    private  $utilisateurs;
+    private $utilisateurs;
+      
     
-     /**
-     *
-     * @OneToMany(targetEntity="Ville", mappedBy="trajet", cascade={"persist", "remove", "merge"})
-     */
-    private  $villePassage;
-    
+    public function __construct() {
+        $this->utilisateurs = new ArrayCollection();
+             
+    }
+
     /**
      * Get id
      *
@@ -98,7 +103,7 @@ class Trajets
      * Set villeDepart
      *
      * @param integer $villeDepart
-     * @return Trajets
+     * @return Trajet
      */
     public function setVilleDepart($villeDepart)
     {
@@ -121,7 +126,7 @@ class Trajets
      * Set villeArrive
      *
      * @param integer $villeArrive
-     * @return Trajets
+     * @return Trajet
      */
     public function setVilleArrive($villeArrive)
     {
@@ -144,7 +149,7 @@ class Trajets
      * Set dateDepart
      *
      * @param \DateTime $dateDepart
-     * @return Trajets
+     * @return Trajet
      */
     public function setDateDepart($dateDepart)
     {
@@ -167,7 +172,7 @@ class Trajets
      * Set dateArrive
      *
      * @param \DateTime $dateArrive
-     * @return Trajets
+     * @return Trajet
      */
     public function setDateArrive($dateArrive)
     {
@@ -184,5 +189,108 @@ class Trajets
     public function getDateArrive()
     {
         return $this->dateArrive;
+    }
+
+    /**
+     * Set autoroute
+     *
+     * @param boolean $autoroute
+     * @return Trajet
+     */
+    public function setAutoroute($autoroute)
+    {
+        $this->autoroute = $autoroute;
+
+        return $this;
+    }
+
+    /**
+     * Get autoroute
+     *
+     * @return boolean 
+     */
+    public function getAutoroute()
+    {
+        return $this->autoroute;
+    }
+
+    /**
+     * Set bagage
+     *
+     * @param string $bagage
+     * @return Trajet
+     */
+    public function setBagage($bagage)
+    {
+        $this->bagage = $bagage;
+
+        return $this;
+    }
+
+    /**
+     * Get bagage
+     *
+     * @return string 
+     */
+    public function getBagage()
+    {
+        return $this->bagage;
+    }
+
+    /**
+     * Set participation
+     *
+     * @param integer $participation
+     * @return Trajet
+     */
+    public function setParticipation($participation)
+    {
+        $this->participation = $participation;
+
+        return $this;
+    }
+
+    /**
+     * Get participation
+     *
+     * @return integer 
+     */
+    public function getParticipation()
+    {
+        return $this->participation;
+    }
+
+    /**
+     * Add utilisateur
+     *
+     * @param \MyApp\CovoiturageBundle\Entity\Utilisateur $utilisateur
+     * @return Trajet
+     */
+    public function addUtilisateur(\MyApp\CovoiturageBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateurs[] = $utilisateur;
+
+        return $this;
+    }
+
+    /**
+     * Remove utilisateur
+     *
+     * @param \MyApp\CovoiturageBundle\Entity\Utilisateur $utilisateur
+     */
+    public function removeUtilisateur(\MyApp\CovoiturageBundle\Entity\Utilisateur $utilisateur)
+    {
+        $this->utilisateurs->removeElement($utilisateur);
+    }
+
+    /**
+     * Get utilisateurs
+     *
+     * 
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUtilisateurs()
+    {
+        return $this->utilisateurs;
     }
 }

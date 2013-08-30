@@ -1,0 +1,51 @@
+<?php
+
+namespace MyApp\CovoiturageBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * TrajetUtilisateur
+ *
+ * @ORM\Table()
+ * @ORM\Entity(repositoryClass="MyApp\CovoiturageBundle\Entity\TrajetUtilisateurRepository")
+ */
+class TrajetUtilisateur
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+     
+    /**
+     * 
+     * @ORM\manyToOne(targetEntity="Utilisateur",inversedBy="trajet_utilisateur")
+     * @ORM\joinColumn(name="utilisateur_id",referencedColumnName="id")
+     * 
+     */
+    
+    private $utilisateur;
+    
+    /**
+     * 
+     * @ORM\manyToOne(targetEntity="Trajet",inversedBy="trajet_utilisateur")
+     * @ORM\joinColumn(name="trajet_id",referencedColumnName="id")
+     * 
+     */
+    private $trajet;
+    
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}
