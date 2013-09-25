@@ -6,7 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use MyApp\CovoiturageBundle\Entity\Trajet;
 use MyApp\CovoiturageBundle\Form\TrajetType;
-use MyApp\CovoiturageBundle\Form\ActeurRechercheForm;
+use MyApp\CovoiturageBundle\Form\TrajetRechercheType;
+
 /**
  * Trajet controller.
  *
@@ -17,16 +18,14 @@ class TrajetController extends Controller {
      * Lists all Trajet entities.
      *
      */
-    
     public function indexAction() {
-        
-  
+
+
 //        $listeTrajet=new RechercheTrajet();
 //        
 //        
 //        $listeTrajet = $this->get('covoiturage.rechercheTrajet')->rechercherTrajet('','','');
 //        
-        
 //        $listeTrajet = new $this->get('covoiturage.rechercheTrajet')->rechercherTrajet();
 //        $form = $this->createForm(new TrajetRechercheType(), $listeTrajet);
 //        $form->bind($request);
@@ -34,11 +33,10 @@ class TrajetController extends Controller {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('MyAppCovoiturageBundle:Trajet')->findAll();
 
-       return $this->render('MyAppCovoiturageBundle:Trajet:index.html.twig', array(
-                  'entities' => $entities,
-      
-           ));
-     }
+        return $this->render('MyAppCovoiturageBundle:Trajet:index.html.twig', array(
+                    'entities' => $entities,
+        ));
+    }
 
     /**
      * Creates a new Trajet entity.
@@ -54,7 +52,7 @@ class TrajetController extends Controller {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
-    
+
 
             return $this->redirect($this->generateUrl('trajet_show', array('id' => $entity->getId())));
         }
@@ -94,12 +92,25 @@ class TrajetController extends Controller {
 
         $deleteForm = $this->createDeleteForm($id);
 
-        
+
         return $this->render('MyAppCovoiturageBundle:Trajet:show.html.twig', array(
                     'entity' => $entity,
                     'delete_form' => $deleteForm->createView(),));
-   
-        }
+    }
+
+    public function listeAction($max = 5) {
+        $em = $this->getDoctrine()->getManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select('t')
+                ->from('MyAppCovoiturageBundle:Trajet', 't')
+                ->orderBy('t.participation', 'DESC')
+                ->setMaxResults($max);
+        $query = $qb->getQuery();
+        $trajets = $query->getResult();
+        return $this->render("MyAppCovoiturageBundle:Trajet:liste.html.twig", array(
+                    'trajets' => $trajets,
+        ));
+    }
 
     /**
      * Displays a form to edit an existing Trajet entity.
@@ -129,34 +140,33 @@ class TrajetController extends Controller {
      *
      */
     public function updateAction(Request $request, $id) {
-        
-        
-          $em = $this->getDoctrine()->getManager();
 
-          $entity = $em->getRepository('MyAppCovoiturageBundle:Trajet')->find($id);
 
-          if (!$entity) {
-          throw $this->createNotFoundException('Unable to find Trajet entity.');
-          }
+        $em = $this->getDoctrine()->getManager();
 
-          $deleteForm = $this->createDeleteForm($id);
-          $editForm = $this->createForm(new TrajetType(), $entity);
-          $editForm->bind($request);
+        $entity = $em->getRepository('MyAppCovoiturageBundle:Trajet')->find($id);
 
-          if ($editForm->isValid()) {
-          $em->persist($entity);
-          $em->flush();
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Trajet entity.');
+        }
 
-          return $this->redirect($this->generateUrl('trajet_edit', array('id' => $id)));
-          }
+        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createForm(new TrajetType(), $entity);
+        $editForm->bind($request);
 
-          return $this->render('MyAppCovoiturageBundle:Trajet:edit.html.twig', array(
-          'entity'      => $entity,
-          'edit_form'   => $editForm->createView(),
-          'delete_form' => $deleteForm->createView(),
-          ));
-           
-      }
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('trajet_edit', array('id' => $id)));
+        }
+
+        return $this->render('MyAppCovoiturageBundle:Trajet:edit.html.twig', array(
+                    'entity' => $entity,
+                    'edit_form' => $editForm->createView(),
+                    'delete_form' => $deleteForm->createView(),
+        ));
+    }
 
 //      public function rechercheAction(){
 //         $entity = new Trajet();
@@ -174,7 +184,7 @@ class TrajetController extends Controller {
 //                  
 //                  
 //      }}
-      
+
     /**
      * Deletes a Trajet entity.
      *
@@ -212,4 +222,58 @@ class TrajetController extends Controller {
         ;
     }
 
+
+
+
+//
+//            return $this->redirect($this->generateUrl('trajet_show', array('id' => $entity->getId())));
+//        }
+//
+//        return $this->render('MyAppCovoiturageBundle:Trajet:new.html.twig', array(
+//                    'entity' => $entity,
+//                    'form' => $form->createView(),
+//        ));
+
+    /**
+     * Displays a form to create a new Trajet entity.
+     *
+     */
+    public function rechercheFormAction() {
+        $trajet = new Trajet();
+        $searchForm = $this->createForm(new TrajetRechercheType(), $trajet);
+
+        return $this->render('MyAppCovoiturageBundle:Trajet:recherche.html.twig', array(
+                    'trajet' => $trajet,
+                    'searchForm' => $searchForm->createView(),
+        ));
+    }
+
+    public function rechercheAction(Request $request) {
+
+        $trajet = new Trajet();
+        $searchForm = $this->createForm(new TrajetRechercheType(), $trajet);
+        $searchForm->bindRequest($request);
+
+        if ($searchForm->isValid()) {
+ 
+            $em = $this->getDoctrine()->getManager();
+            $qb = $em->createQueryBuilder();
+            $qb->select('t')
+                    ->from('MyAppCovoiturageBundle:Trajet', 't')
+                    ->where('t.villeDepart LIKE :villeDepart AND t.villeArrive LIKE :villeArrive AND t.dateDepart = :dateDepart')
+                    ->setParameters(array(
+                        'villeDepart' => '%' . $trajet->getVilleDepart() . '%',
+                        'villeArrive' => '%' . $trajet->getVilleArrive() . '%',
+                        'dateDepart' =>       $trajet->getDateDepart() ))
+                    ->orderBy('t.dateDepart', 'ASC');
+
+            $query = $qb->getQuery();
+
+            $trajets = $query->getResult();
+        }
+        return $this->render('MyAppCovoiturageBundle:Trajet:resultat_recherche.html.twig', array(
+                    'trajets' => $trajets,
+                    'searchForm' => $searchForm->createView()
+        ));
+    }
 }

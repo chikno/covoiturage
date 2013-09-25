@@ -1,6 +1,7 @@
-{% extends 'layout.html.twig' %}
+{% extends 'MyAppCovoiturageBundle::layout.html.twig' %}
+{% block title %}{{parent()}} | {{'Inscription'}}{% endblock %}
 
-{% block body -%}
+{% block body %}
     <h1>Utilisateur list</h1>
 
     <table class="records_list">

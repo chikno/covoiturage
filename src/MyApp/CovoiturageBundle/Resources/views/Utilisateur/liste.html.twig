@@ -1,0 +1,15 @@
+<table>
+    {% for u in utilisateurs %}
+        <tr>
+        <td>{{ u.nom }}</td>
+        <td>{{ u.prenom }}</td>
+                
+       {#  <td><a href="{{ path('myapp_utilisateur_modifier', { 'id': u.id }) }}">Modifier</a></td>
+        <td><a href="{{ path('myapp_utilisateur_supprimer', { 'id': u.id }) }}">Supprimer</a></td>
+        </tr>#}
+        
+{% else %}
+        <tr><td>Aucun utilisateur n'a été trouvé.</td></tr>
+{% endfor %}
+        
+</table>

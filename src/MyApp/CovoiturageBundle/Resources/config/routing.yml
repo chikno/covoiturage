@@ -1,3 +1,8 @@
+#Default
+accueil:
+    pattern:  /
+    defaults: { _controller: "MyAppCovoiturageBundle:Default:index" }
+
 utilisateur:
     pattern:  /utilisateur
     defaults: { _controller: "MyAppCovoiturageBundle:Utilisateur:index" }
@@ -47,10 +52,10 @@ trajet_create:
     pattern:  /trajet/create
     defaults: { _controller: "MyAppCovoiturageBundle:Trajet:create" }
     requirements: { _method: post }
-
 trajet_edit:
     pattern:  /trajet/{id}/edit
     defaults: { _controller: "MyAppCovoiturageBundle:Trajet:edit" }
+
 
 trajet_update:
     pattern:  /trajet/{id}/update
@@ -61,3 +66,15 @@ trajet_delete:
     pattern:  /trajet/{id}/delete
     defaults: { _controller: "MyAppCovoiturageBundle:Trajet:delete" }
     requirements: { _method: post|delete }
+
+trajet_search:
+    pattern:  /trajet/recherche
+    defaults: { _controller: "MyAppCovoiturageBundle:Trajet:recherche" }
+    requirements: { _method: post} 
+   
+
+trajet_search_form:
+    pattern:  /trajet/rechercheForm
+    defaults: { _controller: "MyAppCovoiturageBundle:Trajet:rechercheForm" }
+    requirements: { _method: post|GET} 
+      

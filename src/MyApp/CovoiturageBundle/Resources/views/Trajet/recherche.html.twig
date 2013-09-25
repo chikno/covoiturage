@@ -1,0 +1,21 @@
+<form id="form_recherche" action="{{ path('trajet_search') }}" method="post" {{ form_enctype(searchForm)}}>
+{{ form_widget(searchForm) }}
+        <input type="submit" value="Rechercher" />
+</form>
+
+  {# 
+{% for t in listeTrajets %}
+         <tr>
+            <td> <a href="{{path('trajet_show', { 'id':t.id }) }}"> {{ t.villeDepart}}---> {{t.villeArrive}} </a></td>
+            <td>Le :{{ t.dateDepart|date('d-m-Y')}} à: {{ t.dateDepart|date('H-m-s')}}</td>
+            <td>{{ t.participation}}Dh</td> 
+         </tr>
+        
+       <td><a href="{{ path('myapp_trajet_modifier', { 'id': t.id }) }}">Modifier</a></td>
+        
+       <td><a href="{{ path('myapp_trajet_supprimer', { 'id': t.id }) }}">Supprimer</a></td>
+              
+{% else %}
+        <tr><td>Aucun trajet n'a été trouvé.</td></tr>
+{% endfor %}
+#}

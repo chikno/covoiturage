@@ -25,19 +25,19 @@ class Trajet
     private $id;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="villeDepart", type="integer")
+     * @ORM\Column(name="villeDepart", type="string")
      */
     private $villeDepart;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="villeArrive", type="integer")
+     * @ORM\Column(name="villeArrive", type="string")
      */
     private $villeArrive;
-
+        
     /**
      * @var \DateTime
      *

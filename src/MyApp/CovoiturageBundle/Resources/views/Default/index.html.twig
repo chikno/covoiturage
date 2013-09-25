@@ -1,1 +1,30 @@
-Hello {{ name }}!
+{% extends "MyAppCovoiturageBundle::layout.html.twig"  %}
+
+{% block title %}{{parent()}} | {{'accueil'}}{% endblock %}
+
+{% block body %}
+
+<h3>
+Recherche
+</h3>
+
+      {{ render(controller('MyAppCovoiturageBundle:Trajet:rechercheForm')) }}  
+          
+  {# <div id="resultat_recherche">
+                  {{ render(controller('MyAppCovoiturageBundle:Trajet:recherche')) }}
+             </div>
+              #}
+<h3>
+    
+{#{{ 'acteur.top.jeunes'|trans }}#}
+        Derniers trajets
+</h3>
+
+{{ render(controller('MyAppCovoiturageBundle:Trajet:liste', { 'max': 5 })) }}
+
+<h3>{#{{ 'film.top'|trans }}#}
+Derniers Utilisateurs
+</h3>
+{{ render(controller('MyAppCovoiturageBundle:Utilisateur:liste', { 'max': 5 })) }}
+
+{% endblock %}

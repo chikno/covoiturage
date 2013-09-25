@@ -1,4 +1,6 @@
-{% extends '::base.html.twig' %}
+{% extends 'MyAppCovoiturageBundle::layout.html.twig' %}
+
+{% block title %}{{parent()}} | {{'comment ça marche ?'}}{% endblock %}
 
 {% block body -%}
     <h1>Trajet list</h1>

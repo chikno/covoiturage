@@ -432,4 +432,7 @@ class Utilisateur
     {
         return $this->trajet_utilisateur;
     }
-}
+    public function __toString() {
+        return $this->nom;
+    }
+    }

@@ -53,6 +53,20 @@ class UtilisateurController extends Controller
             'form'   => $form->createView(),
         ));
     }
+    
+    public function listeAction($max = 5){
+            $em=$this->getDoctrine()->getManager();
+            $qb= $em->createQueryBuilder();
+            $qb ->select('u') 
+                ->from('MyAppCovoiturageBundle:Utilisateur','u')
+                ->orderBy('u.nom','DESC')
+                ->setMaxResults($max);
+            $query=$qb->getQuery();
+            $utilisateurs=$query->getResult();
+            return $this->render("MyAppCovoiturageBundle:Utilisateur:liste.html.twig", array(
+                'utilisateurs' => $utilisateurs,
+            ));
+        }
 
     /**
      * Displays a form to create a new Utilisateur entity.
